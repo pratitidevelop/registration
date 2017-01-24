@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+     <link rel="stylesheet" href='/css/bootstrap.min.css' />
+  </head>
+  <body>
+  <div class="container">
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
+   
+    	
+    	<table class="table table-hover">
+    	<thead>
+      		<tr>
+        		<th>Serial No</th>
+        		<th>Registration No</th>
+        		<th>Roll No</th>
+        		<th>Name</th>
+        		<th>Age</th>
+        		<th>Address</th>
+        		<th>Action</th>
+      		</tr>
+    	</thead>
+    	<tbody>
+    	<% students.forEach(function(el,idx){ %>
+    		<tr>
+    			<td><%= idx+1 %></td>
+    			<td><%= el.regNo %></td>
+    			<td><%= el.rollNo %></td>
+    			<td><%= el.name.firstname +' '+ el.name.lastname %></td>
+    			<td><%= el.age %></td>
+    			<td><%= 'City:'+el.address.city +' '+'State:'+ el.address.state +' ' +'Country: '+ el.address.country %></td>
+    			<td>
+    				<button type ='button' class="btn btn-success edit-btn" id='edit' data-student-id="<%= el._id%>">Edit</button> 
+    				<button type ='button' class="btn btn-danger delete-btn" id='dele' data-student-id="<%= el._id%>" >Delete</button> 
+
+    			</td>
+    		</tr>
+    	<%})%>
+    	</tbody>
+    	</table>
+   </div>
+
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+   <script type="text/javascript">
+   		$('.edit-btn').click(function(evt){
+   			evt.preventDefault();
+   			window.location.href = '/student/edit/' + $(this).data("student-id");
+   		})
+
+   		$('.delete-btn').click(function(evt){
+   			
+   			evt.preventDefault();
+   			//window.location.href = '/student/delete/' + $(this).data('student-id');
+
+   			$.ajax({
+   				url : '/student/delete/' + $(this).data('student-id'),
+   				type : 'DELETE',
+   				success : function(result){
+   					alert('Student details successfully deleted ');
+   					window.location.reload();
+   				}
+   			});
+   		})
+   </script>
+  </body>
+</html>

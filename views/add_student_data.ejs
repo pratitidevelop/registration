@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href='/css/bootstrap.min.css' />
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
+
+
+    <div class="container">
+    	<div class="col-sm-12 col-md-12 col-xs-12">
+    		<div class="row">
+    			<label>First Name</label>
+    			<input type="text" class="form-control" id="fname" style="width: 250px">
+    		</div>
+    		<div class="row">
+    		<div class="row">
+    			<label>Last Name</label>
+    			<input type="text" class="form-control" id="lname" style="width: 250px">
+    		</div>
+    			<label>Registration No</label>
+    			<input type="text" class="form-control" id="reg" style="width: 250px">
+    		</div>
+    		<div class="row">
+    			<label>Roll No</label>
+    			<input type="number" class="form-control" id="roll" style="width: 250px">
+    		</div>
+    		<div class="row">
+    			<label>Age</label>
+    			<input type="number" class="form-control" id="age" style="width: 250px">
+    		</div>
+    		<div class="row">
+    			<label>College Name</label>
+    			<input type="text" class="form-control" id="colgn" style="width: 250px">
+    		</div>
+    		<div class="row">
+    			<label>City</label>
+    			<input type="text" class="form-control" id="city" style="width: 250px">
+    		</div>
+    		<div class="row">
+    			<label>Country</label>
+    			<input type="text" class="form-control" id="countryid" style="width: 250px">
+    		</div>
+    		<div class="row">
+    			<label>State</label>
+    			<input type="text" class="form-control" id="stateid" style="width: 250px">
+    		</div>
+    		<div class="row">
+    			<button type="button" class="btn btn-primary" id="add_data">ADD</button>
+    		</div>
+    	</div>
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript">
+    	
+    		
+    		$("#add_data").click(function(evt){
+    				evt.preventDefault();
+    			var student = {
+    				regNo : $('#reg').val(),
+    				rollNo : $('#roll').val(),
+    				name : {
+    					firstname : $('#fname').val(),
+    					lastname : $('#lname').val()
+    				},
+    				age : $('#age').val(),
+    				collegeName : $('#colgn').val(),
+    				address : {
+    					city : $('#city').val(),
+    					country : $('#countryid').val(),
+    					state : $('#stateid').val()
+    				}
+    			};
+
+    			//console.log(student);
+
+    				$.ajax({
+    					url : '/student/add',
+    					type : 'POST',
+    					data :{
+    						studentData : JSON.stringify(student)	
+    					} ,
+    					success : function(result){
+    						//console.log(result);
+    						// var obj= JSON.stringify(result);
+    						// console.log("name is"+' '+ obj.fname+' '+obj.lname);
+    						// var obj = JSON.parse(result);
+    						 //console.log(result.age);
+    						 //console.log(obj.name.firstname);
+    						 if(!result.error){
+    						 	console.log('Data added successfully');
+    						 }
+    						 window.location.href = '/student/list';
+
+    					}
+
+
+    				});
+    		});
+    		
+    	
+    </script>
+  </body>
+</html>
